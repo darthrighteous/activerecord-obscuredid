@@ -1,0 +1,11 @@
+require:
+  - rubocop-minitest
+  - rubocop-rake
+
+AllCops:
+  TargetRubyVersion: 3.0
+  NewCops: enable
+
+Naming/FileName:
+  Exclude:
+    - lib/activerecord-obscuredid.rb

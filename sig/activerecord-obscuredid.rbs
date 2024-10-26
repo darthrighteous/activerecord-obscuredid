@@ -1,0 +1,42 @@
+module ActiveRecord
+  module ObscuredId
+    VERSION: String
+
+    class Configuration
+      attr_accessor domain: String
+
+      def initialize: () -> void
+    end
+
+    attr_writer self.config: Configuration
+
+    def self.config: (Configuration) -> Configuration
+    def self.configure: () { (Configuration) -> void } -> void
+
+    module ClassMethods
+      def find_obscured: (obscured_id: String) -> ActiveRecord::Base?
+      def find_obscured!: (obscured_id: String) -> ActiveRecord::Base
+
+      private
+
+      def decode_obscured_id: (obscured_id: String) -> String
+    end
+
+    def obscured_id: () -> String
+
+    module Base32
+      BASE32_ALPHABET: String
+
+      def encode: (input: String) -> String
+      def decode: (base32_str: String) -> String
+    end
+
+    module Extensions
+      module EmailAddress
+        def from_obscured_email_address: (obscured_email_address: String) -> ActiveRecord::Base?
+
+        def obscured_email_address: () -> String
+      end
+    end
+  end
+end
