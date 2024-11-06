@@ -32,6 +32,7 @@ class ActiveRecordObscuredIdTest < Minitest::Test
 
     ActiveRecord::ObscuredId.configure do |config|
       config.domain = 'test.com'
+      config.old_domains = ['old-test.com']
     end
   end
 
@@ -74,7 +75,16 @@ class ActiveRecordObscuredIdTest < Minitest::Test
 
     assert record.is_a?(MockRecord)
     assert_equal 7371, record.id
+  end
 
+  def test_from_old_obscured_email_address
+    record = MockRecord.from_obscured_email_address('g4ztomi@mock-records.old-test.com')
+
+    assert record.is_a?(MockRecord)
+    assert_equal 7371, record.id
+  end
+
+  def test_from_invalid_obscured_email_address
     record = MockRecord.from_obscured_email_address('invalid@mock-records.test.com')
 
     assert_nil record

@@ -5,10 +5,11 @@ module ActiveRecord
   module ObscuredId
     # Holds configuration options for obscured id
     class Configuration
-      attr_accessor :domain
+      attr_accessor :domain, :old_domains
 
       def initialize
         @domain = 'example.com'
+        @old_domains = []
       end
     end
 

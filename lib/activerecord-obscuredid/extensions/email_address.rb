@@ -15,9 +15,12 @@ module ActiveRecord
         class_methods do
           def from_obscured_email_address(obscured_email_address)
             domain = obscured_id_email_domain
+            old_domains = obscured_id_email_old_domains
             subdomain = obscured_id_email_subdomain
 
-            return nil unless obscured_email_address.match?(/@#{subdomain}.#{domain}\z/)
+            matched = obscured_email_address.match?(/@#{subdomain}.#{domain}\z/)
+            matched ||= obscured_email_address.match?(/@#{subdomain}.(#{old_domains.join('|')})\z/) if old_domains.any?
+            return nil unless matched
 
             find_obscured(obscured_email_address.remove(/@.*\z/))
           end
@@ -25,6 +28,7 @@ module ActiveRecord
           private
 
           def obscured_id_email_domain = ActiveRecord::ObscuredId.config.domain
+          def obscured_id_email_old_domains = ActiveRecord::ObscuredId.config.old_domains
           def obscured_id_email_subdomain = name.pluralize.underscore.dasherize.downcase
         end
 

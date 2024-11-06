@@ -4,6 +4,7 @@ module ActiveRecord
 
     class Configuration
       attr_accessor domain: String
+      attr_accessor old_domains: [String]
 
       def initialize: () -> void
     end

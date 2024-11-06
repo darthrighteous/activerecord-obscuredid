@@ -23,6 +23,9 @@ By default, the gem uses example.com as the domain for generating obscured email
 # config/initializers/obscured_id.rb
 ActiveRecord::ObscuredId.configure do |config|
   config.domain = 'yourdomain.com'
+
+  # if you change your domain, and still need records to be findable by the old domain name
+  config.old_domains = ['yourolddomain.com']
 end
 ```
 
